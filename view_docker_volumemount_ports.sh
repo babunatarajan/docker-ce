@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 for OUT in $(sudo docker ps --format '{{.Names}}');
   do
-	  volm=$(sudo docker inspect $OUT | jq '.[] | .Mounts[]')
+	  out=$(sudo docker inspect $OUT | jq '.[] | .Mounts[]')
 	  echo "$OUT"
-	  echo "$volm";
+	  echo "$out";
   done
 for OUT in $(sudo docker ps --format '{{.Names}}');
   do
-	  volm=$(sudo docker inspect $OUT | jq '.[] | .NetworkSettings.Ports')
+	  out=$(sudo docker inspect $OUT | jq '.[] | .NetworkSettings.Ports')
 	  echo "$OUT"
-	  echo "$volm";
+	  echo "$out";
   done
