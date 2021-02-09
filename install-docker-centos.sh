@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
 sudo su - 
+
+yum update
+yum upgrade
+
 docker_compose_ver="1.28.2"
 
 mkdir /root/docker
