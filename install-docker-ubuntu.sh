@@ -1,6 +1,10 @@
 #!/bin/sh
 
+sudo su - 
 docker_compose_ver="1.28.2"
+
+mkdir /root/docker
+cd /root/docker/
 
 apt-get -y update
 
@@ -22,3 +26,8 @@ curl -fsSL get.docker.com | sh
 curl -L "https://github.com/docker/compose/releases/download/$docker_compose_ver/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 docker-compose --version
+
+cp docker-compose.yml /root/docker
+echo "Update docker-compose.yml and run the following command to start the container"
+echo "docker-compose up -d"
+
