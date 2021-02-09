@@ -1,1 +1,1 @@
-# docker-ce-nginx-ubuntu
+# docker-ce install on Ubuntu and Centos
