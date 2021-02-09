@@ -1,0 +1,59 @@
+version: '2.4'
+
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: dev
+    container_name: dev
+    hostname: dev
+    restart: always
+    ports:
+      - "8000-8009:8000-8009"
+      - "80:80"  
+    tty: true
+#    cpu_count: 2
+#    cpu_percent: 50
+#    cpus: 0.5
+#    mem_limit: 2048m
+    privileged: true
+    volumes:
+      - type: bind
+        source: /opt/source
+        target: /opt/target
+  mysqldb:
+    image: mysql:5.5.54
+    container_name: mysqldb
+    hostname: mysqldb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: PSsss123
+    ports:
+      - "3346:3306" # Mysql external connectivity port
+    tty: true
+  pgadmin:
+    container_name: pgadmin4_4_24
+    hostname: pgadmin4
+    image: dpage/pgadmin4:4.24
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'some-user@example.com'
+      PGADMIN_DEFAULT_PASSWORD: 'Password12345'
+    volumes:
+       - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+#    networks:
+#      - postgres
+    restart: unless-stopped
+    tty: true
+#    cpu_count: 2
+#    cpu_percent: 50
+#    cpus: 0.5
+#    mem_limit: 2048m
+
+#networks:
+#  postgres:
+#    driver: bridge
+
+volumes:
+    pgadmin:
