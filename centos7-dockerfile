@@ -1,0 +1,25 @@
+FROM centos:centos7
+
+ENV DEP="/opt/epoint.sh"
+RUN touch $DEP
+
+RUN yum -y install --setopt=tsflags=nodocs epel-release
+RUN yum -y install supervisor
+RUN yum -y --setopt=tsflags=nodocs install httpd && \
+    yum clean all
+
+
+RUN echo "#!/bin/bash" > $DEP
+RUN mkdir -p "/etc/supervisor/conf.d/"
+RUN echo "[supervisord]" > "/etc/supervisor/conf.d/nodaemon.conf"
+RUN echo "nodaemon=true" >> "/etc/supervisor/conf.d/nodaemon.conf"
+RUN echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> $DEP
+
+RUN chmod +x $DEP
+
+
+# ADD run-httpd.sh /run-httpd.sh
+# RUN chmod -v +x /run-httpd.sh
+
+ENTRYPOINT ["/opt/epoint.sh"]
+#CMD ["/run-httpd.sh"]
