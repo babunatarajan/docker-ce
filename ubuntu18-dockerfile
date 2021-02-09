@@ -1,0 +1,28 @@
+FROM ubuntu:18.04
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+  curl \
+  wget \
+  dialog \
+  openssh-client \
+  software-properties-common \
+  dnsutils \
+  net-tools \
+  sudo \
+  rsyslog \
+  unzip \
+  vim \
+  ufw \
+  supervisor
+
+ENV DEP="/opt/epoint.sh"
+RUN touch $DEP
+
+RUN echo "#!/bin/bash" > $DEP
+RUN echo "[supervisord]" > "/etc/supervisor/conf.d/nodaemon.conf"
+RUN echo "nodaemon=true" >> "/etc/supervisor/conf.d/nodaemon.conf"
+RUN echo "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf" >> $DEP
+
+RUN chmod +x $DEP
+
+ENTRYPOINT ["/opt/epoint.sh"]
