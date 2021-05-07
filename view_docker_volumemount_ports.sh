@@ -11,3 +11,9 @@ for OUT in $(sudo docker ps --format '{{.Names}}');
 	  echo "$OUT"
 	  echo "$out";
   done
+for OUT in $(sudo docker ps --format '{{.Names}}');
+  do
+	  out=$(sudo docker inspect $OUT | jq '.[] | .Path')
+	  echo "$OUT"
+	  echo "$out";
+  done
