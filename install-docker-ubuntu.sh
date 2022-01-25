@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo su - 
+echo "sudo su - "
 docker_compose_ver="1.28.2"
 
 mkdir /root/docker
