@@ -1,0 +1,5 @@
+
+create role your_username with password 'Pass11111';
+create database your_username;
+alter database your_username owner to your_username;
+ALTER ROLE "your_username" WITH LOGIN;

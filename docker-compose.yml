@@ -3,9 +3,10 @@ version: '3.2'
 
 services:
   dev:
-    build:
-      context: .
-      dockerfile: dev
+    image: babunatarajan/ubuntu2004-supervisor:v1.0
+#    build:
+#      context: .
+#      dockerfile: dev
     container_name: dev
     hostname: dev
     restart: always
@@ -19,9 +20,13 @@ services:
 #    mem_limit: 2048m
     privileged: true
     volumes:
-      - type: bind
-        source: /opt/source
-        target: /opt/target
+#      - type: bind
+#        source: /opt/source
+#        target: /opt/target
+      - /opt/source:/opt/target
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
+    # Represents directory from physical host and target is Container path
   mysqldb:
     image: mysql:5.5.54
     container_name: mysqldb
@@ -32,6 +37,21 @@ services:
     ports:
       - "3346:3306" # Mysql external connectivity port
     tty: true
+    volumes:
+      - /opt/mysql-data:/var/lib/mysql
+
+  psqldb:
+    image: postgres:13.1
+    container_name: psqldb
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: SsS111111
+    ports:
+      - "30346:5432" 
+    tty: true
+    hostname: psqldb
+    volumes:
+      - /opt/postgres-data:/var/lib/postgresql
   pgadmin:
     container_name: pgadmin4_4_24
     hostname: pgadmin4
